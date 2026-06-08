@@ -112,13 +112,7 @@ The Random Forest model achieved **86.8% accuracy** with a **high recall of 90.7
 
 ### Feature Importance Analysis
 
-Based on the Random Forest model's feature importance, the most predictive clinical indicators for heart disease are:
-
-1. **ST_Slope** – The slope of the peak exercise ST segment is the strongest predictor, with flat and downward slopes strongly associated with heart disease
-2. **ChestPainType** – Asymptomatic (ASY) chest pain shows high correlation with heart disease, highlighting the danger of silent heart attacks
-3. **MaxHR** – Lower maximum heart rate during exercise is associated with higher heart disease risk
-4. **Oldpeak** – ST depression during exercise (Oldpeak) is a significant predictor
-5. **Age** – Older patients show increased risk, as expected in cardiovascular disease
+The Random Forest model provides feature importance scores that identify the most predictive clinical indicators for heart disease. The top features include exercise-related parameters (ST_Slope, MaxHR, Oldpeak) and patient characteristics (Age, ChestPainType), which align with clinical expectations for cardiovascular risk assessment.
 
 ### Clinical Implications
 
