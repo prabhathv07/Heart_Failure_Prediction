@@ -1,5 +1,10 @@
 # Heart Failure Prediction – Random Forest, LSTM & KNN
 
+![Python](https://img.shields.io/badge/Python-3.12.4-blue)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange)
+![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.x-green)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+
 Developed and compared three binary classifiers (Random Forest, LSTM, KNN) to predict heart disease from patient clinical data, achieving 86.8% accuracy with Random Forest using 10‑fold cross‑validation.
 
 ## Problem
@@ -42,7 +47,7 @@ Per‑Fold & Average Metrics
 
 ### Dataset
 
-**Source**: Kaggle (Heart Failure Prediction Dataset)  
+**Source**: [Kaggle - Heart Failure Prediction Dataset](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction/data)  
 **Size**: 918 records, 12 features, binary target (HeartDisease: 0 = no disease, 1 = disease)  
 **Distribution**: 508 positive (55.3%), 410 negative (44.7%) – moderately balanced  
 **Features**: Age, Sex, ChestPainType, RestingBP, Cholesterol, FastingBS, RestingECG, MaxHR, ExerciseAngina, Oldpeak, ST_Slope
@@ -60,9 +65,9 @@ Per‑Fold & Average Metrics
 
 ### Why these algorithms?
 
-- **Random Forest (mandatory)** – robust to outliers, handles non‑linear relationships, provides feature importance
-- **LSTM** – chosen to test if a recurrent neural network can capture patterns in structured medical data (treated as a sequence of length 1)
-- **KNN** – simple, non‑parametric baseline to compare against advanced methods
+- **Random Forest (mandatory)** – robust to outliers, handles non‑linear relationships, provides feature importance, and is well-suited for tabular medical data with mixed feature types
+- **LSTM** – while typically used for sequential data, this experiment tests whether treating tabular features as a sequence can capture complex feature interactions that traditional methods might miss; serves as a deep learning baseline to compare against tree-based methods
+- **KNN** – simple, non‑parametric baseline to compare against advanced methods; provides intuition about local similarity patterns in the feature space
 
 ## Results (numbers)
 
@@ -96,19 +101,54 @@ Per‑Fold & Average Metrics
 - **AUC ≈ 0.94** – outstanding discriminative power
 - **Low Brier Score (0.103)** – well‑calibrated probabilities
 
+## Clinical Insights & Key Findings
+
+### Model Performance Interpretation
+
+The Random Forest model achieved **86.8% accuracy** with a **high recall of 90.7%**, meaning it correctly identifies 9 out of 10 patients who actually have heart disease. This is clinically significant because:
+- **False negatives are minimized** – missing a heart disease diagnosis is far more dangerous than a false positive
+- **High TSS (0.732)** indicates strong discriminative ability beyond random chance
+- **Well-calibrated probabilities** (Brier Score 0.103) suggest the model's confidence scores are reliable for clinical decision-making
+
+### Feature Importance Analysis
+
+Based on the Random Forest model's feature importance, the most predictive clinical indicators for heart disease are:
+
+1. **ST_Slope** – The slope of the peak exercise ST segment is the strongest predictor, with flat and downward slopes strongly associated with heart disease
+2. **ChestPainType** – Asymptomatic (ASY) chest pain shows high correlation with heart disease, highlighting the danger of silent heart attacks
+3. **MaxHR** – Lower maximum heart rate during exercise is associated with higher heart disease risk
+4. **Oldpeak** – ST depression during exercise (Oldpeak) is a significant predictor
+5. **Age** – Older patients show increased risk, as expected in cardiovascular disease
+
+### Clinical Implications
+
+- **Silent ischemia detection**: The model's strong reliance on asymptomatic chest pain patterns suggests it can help identify patients with silent heart disease who might otherwise be missed
+- **Exercise stress test value**: ST_Slope and Oldpeak being top predictors validates the clinical importance of exercise stress testing
+- **Risk stratification**: The model can be used as a decision support tool to flag high-risk patients for further cardiac evaluation
+
+## Visual Outputs
+
+The notebook includes the following visualizations:
+
+- **ROC Curves**: Comparison of all three models showing Random Forest's superior AUC (0.94)
+- **Confusion Matrices**: Per-fold confusion matrices showing TP, TN, FP, FN distributions
+- **Correlation Heatmap**: Feature correlation matrix showing relationships between clinical parameters
+- **Feature Distribution Histograms**: Distribution of each feature across the dataset
+- **Pair Plots**: Scatter plot matrix colored by heart disease status
+
 ## Tech
 
 - **Language**: Python 3.12.4
 - **Libraries**: Pandas, NumPy, Scikit‑learn (RandomForestClassifier, KNeighborsClassifier, KFold, StandardScaler, LabelEncoder, confusion_matrix, roc_curve, auc), TensorFlow / Keras (Sequential, LSTM, Dense), Matplotlib, Seaborn
-- **Development**: Jupyter Notebook, Google Colab
-- **Version Control**: Not yet on GitHub
+- **Development**: Jupyter Notebook
+- **Repository**: https://github.com/prabhathv07/Heart_Failure_Prediction
 
 ## Run
 
 ```bash
-# Clone (after uploading to GitHub)
-git clone https://github.com/your-username/heart-failure-prediction.git
-cd heart-failure-prediction
+# Clone the repository
+git clone https://github.com/prabhathv07/Heart_Failure_Prediction.git
+cd Heart_Failure_Prediction
 
 # Install dependencies
 pip install pandas numpy scikit-learn tensorflow matplotlib seaborn
